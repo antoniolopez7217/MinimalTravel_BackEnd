@@ -5,10 +5,14 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Task {
@@ -21,15 +25,20 @@ public class Task {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") // Formato ISO-8601s
     private Date creationDate;
 
-    private String status; // Example: "Pending", "Completed"
+    private String status; // Example:"Deleted", "Pending", "Done"
+    
+    // Relación ManyToOne con User, usando assignedUserId como clave foránea
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assignedUserId", referencedColumnName = "userId")
+    private User assignedUser;
+
+    // Campo solo-lectura para exponer el userId directamente si lo necesitas
+    @Column(name = "assignedUserId", insertable = false, updatable = false)
+    private Long assignedUserId;
 
     // Getters and setters
     public Long getTaskId() {
         return taskId;
-    }
-
-    public void setTaskId(Long taskId) {
-        this.taskId = taskId;
     }
 
     public String getDescription() {
@@ -55,4 +64,13 @@ public class Task {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public User getAssignedUser() { return assignedUser; }
+    public void setAssignedUser(User assignedUser) { 
+        this.assignedUser = assignedUser;
+        this.assignedUserId = assignedUser != null ? assignedUser.getUserId() : null;
+    }
+
+    public Long getAssignedUserId() { return assignedUserId; }
+    // No setter para assignedUserId, se gestiona automáticamente por JPA
 }
