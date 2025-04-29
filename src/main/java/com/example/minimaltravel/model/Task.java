@@ -25,7 +25,7 @@ public class Task {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") // Formato ISO-8601s
     private Date creationDate;
 
-    private String status; // Example:"Deleted", "Pending", "Done"
+    private String status; // Example:"Eliminada", "Pendiente", "Completada"
     
     // Relación ManyToOne con User, usando assignedUserId como clave foránea
     @ManyToOne(fetch = FetchType.LAZY)
