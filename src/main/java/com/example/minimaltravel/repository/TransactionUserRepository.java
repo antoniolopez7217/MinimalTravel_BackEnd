@@ -16,5 +16,5 @@ public interface TransactionUserRepository extends JpaRepository<TransactionUser
     @Modifying
     @Transactional
     @Query("DELETE FROM TransactionUser tu WHERE tu.transaction.transactionId = :transactionId")
-    void deleteByTransactionId(Long transactionId);
+    void deleteByTransaction_TransactionId(Long transactionId);
 }

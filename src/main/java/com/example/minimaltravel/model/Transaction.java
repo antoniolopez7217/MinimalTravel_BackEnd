@@ -11,8 +11,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,10 +21,6 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Transaction {
-
-	public enum TransactionCategory {
-        Comida, Transporte, Ocio, Ropa, Compras, Actividades, Otros
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,9 +33,7 @@ public class Transaction {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") // Formato ISO-8601s
     private Date creationDate;
 
-    @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "ENUM('Comida', 'Transporte', 'Ocio', 'Ropa', 'Compras', 'Actividades', 'Otros')")
-    private TransactionCategory category;
+    private String category;
     
     // Relación ManyToOne con User, usando creditorUserId como clave foránea
     @ManyToOne(fetch = FetchType.LAZY)
@@ -86,11 +78,11 @@ public class Transaction {
         this.amount = amount;
     }
 
-	public TransactionCategory getCategory() {
+	public String getCategory() {
         return category;
     }
 
-    public void setCategory(TransactionCategory category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 

@@ -2,6 +2,7 @@ package com.example.minimaltravel.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +82,7 @@ public class TransactionService {
 
     @Transactional
     public void deleteTransaction(Long id) {
-        transactionUserRepository.deleteByTransactionId(id);
+        transactionUserRepository.deleteByTransaction_TransactionId(id);
         transactionRepository.deleteById(id);
     }
 
@@ -112,4 +113,45 @@ public class TransactionService {
         dto.setParticipants(participants);
         return dto;
     }
+
+    @Transactional
+    public TransactionResponseDTO updateTransaction(Long id, TransactionRequestDTO dto) {
+        // 1. Buscar la transacción existente
+        Transaction transaction = transactionRepository.findById(id)
+            .orElseThrow(() -> new NoSuchElementException("Transacción no encontrada"));
+
+        // 2. Actualizar campos básicos
+        transaction.setDescription(dto.getDescription());
+        transaction.setAmount(dto.getAmount());
+        transaction.setCategory(dto.getCategory());
+
+        // 3. Actualizar usuario que pagó (si cambió)
+        if (!transaction.getCreditorUser().getUserId().equals(dto.getCreditorUserId())) {
+            User creditor = userRepository.findById(dto.getCreditorUserId())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+            transaction.setCreditorUser(creditor);
+        }
+
+        // 4. Eliminar participantes antiguos
+        transactionUserRepository.deleteByTransaction_TransactionId(id);
+
+        // 5. Añadir nuevos participantes
+        for (TransactionRequestDTO.ParticipantInfo participant : dto.getParticipants()) {
+            User debtor = userRepository.findById(participant.getUserId())
+                .orElseThrow(() -> new RuntimeException("Usuario participante no encontrado"));
+
+            TransactionUser transactionUser = new TransactionUser();
+            transactionUser.setTransaction(transaction);
+            transactionUser.setDebtorUser(debtor);
+            transactionUser.setAmount(participant.getAmount());
+            transactionUserRepository.save(transactionUser);
+        }
+
+        // 6. Guardar cambios
+        Transaction updatedTransaction = transactionRepository.save(transaction);
+
+        // 7. Convertir a DTO y devolver
+        return convertToDTO(updatedTransaction);
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.example.minimaltravel.controller;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,6 +56,21 @@ public class TransactionController {
         return transaction != null ? 
             ResponseEntity.ok(transaction) : 
             ResponseEntity.notFound().build();
+    }
+
+    // Actualizar transacción
+    @PutMapping("/{id}")
+    public ResponseEntity<TransactionResponseDTO> updateTransaction(
+            @PathVariable Long id,
+            @RequestBody TransactionRequestDTO transactionRequest) {
+        try {
+            TransactionResponseDTO updatedTransaction = transactionService.updateTransaction(id, transactionRequest);
+            return ResponseEntity.ok(updatedTransaction);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     // Eliminar transacción
