@@ -4,9 +4,10 @@ import java.util.List;
 
 import com.example.minimaltravel.model.Transaction.TransactionCategory;
 
+// Recibe datos del frontend para crear/actualizar transacciones
 public class TransactionRequestDTO {
     private String description;
-    private Long amount;
+    private Double amount;
     private TransactionCategory category;
     private Long creditorUserId;
     private List<ParticipantInfo> participants; // Lista de participantes como objetos internos
@@ -26,8 +27,8 @@ public class TransactionRequestDTO {
     // Getters y setters para TransactionRequestDTO
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
-    public Long getAmount() { return amount; }
-    public void setAmount(Long amount) { this.amount = amount; }
+    public Double getAmount() { return amount; }
+    public void setAmount(Double amount) { this.amount = amount; }
     public TransactionCategory getCategory() { return category; }
     public void setCategory(TransactionCategory category) { this.category = category; }
     public Long getCreditorUserId() { return creditorUserId; }

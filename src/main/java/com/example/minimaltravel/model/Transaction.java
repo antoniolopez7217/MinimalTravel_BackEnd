@@ -34,7 +34,7 @@ public class Transaction {
 
     private String description;
 
-	private Long amount;
+	private Double amount;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") // Formato ISO-8601s
     private Date creationDate;
@@ -78,11 +78,11 @@ public class Transaction {
         this.creationDate = creationDate;
     }
 
-    public Long getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(Long amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
