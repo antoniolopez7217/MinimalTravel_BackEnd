@@ -16,8 +16,8 @@
 Clona ambos repositorios en tu máquina local:
 
 ```
-git clone https://github.com/usuario/minimaltravel-backend.git
-git clone https://github.com/usuario/minimaltravel-frontend.git
+git clone https://github.com/antoniolopez7217/MinimalTravel_BackEnd.git
+git clone https://github.com/antoniolopez7217/MinimalTravel_FrontEnd.git
 ```
 
 ---
@@ -41,13 +41,13 @@ git clone https://github.com/usuario/minimaltravel-frontend.git
 1. Entra en la carpeta del backend:
 
    ```
-   cd minimaltravel-backend
+   cd MinimalTravel_BackEnd
    ```
 
 2. Edita el archivo `src/main/resources/application.properties` y configura la conexión a la base de datos. Sustituye `localhost` por la IP de tu máquina si es necesario:
 
    ```
-   spring.datasource.url=jdbc:mysql://:3306/minimaltravel?useSSL=false&serverTimezone=UTC
+   spring.datasource.url=jdbc:mysql://localhost:3306/minimal_travel
    spring.datasource.username=
    spring.datasource.password=
    ```
@@ -64,12 +64,12 @@ git clone https://github.com/usuario/minimaltravel-frontend.git
 
 ## 4. Configuración del frontend (Android)
 
-1. Abre la carpeta `minimaltravel-frontend` en Android Studio.
+1. Abre la carpeta `MinimalTravel_FrontEnd` en Android Studio.
 
-2. En el archivo donde se configura la URL base de la API (por ejemplo, en `ApiClient.java` o `BuildConfig`), asegúrate de que la IP apunta a la máquina donde corre el backend. Si ejecutas el emulador de Android, la IP de tu PC suele ser `10.0.2.2` (para emulador) o la IP de tu red local para dispositivos físicos:
+2. En el archivo donde se configura la URL base de la API (`ApiClient.java`), asegúrate de que la IP apunta a la máquina donde corre el backend. Si ejecutas el emulador de Android, la IP de tu PC suele ser `10.0.2.2` (para emulador) o la IP de tu red local para dispositivos físicos:
 
    ```
-   public static final String BASE_URL = "http://:8080/api/";
+   private static final String BASE_URL = "http://:8080/api/";
    ```
 
 3. Compila y ejecuta la aplicación en el emulador o en un dispositivo físico.
@@ -92,10 +92,3 @@ Para un despliegue en producción, se recomienda:
 - Configurar variables de entorno seguras para las credenciales.
 - Desplegar el backend en un servidor seguro (por ejemplo, AWS EC2, Heroku, etc.).
 - Publicar la app Android en Google Play si es necesario.
-
----
-
-**Recuerda:**  
-Siempre que cambies de máquina o red, revisa y actualiza la IP de la base de datos y del backend en los archivos de configuración correspondientes para asegurar la conectividad de todos los componentes del sistema.
-
----
