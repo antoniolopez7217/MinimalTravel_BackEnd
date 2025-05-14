@@ -1,4 +1,4 @@
-```markdown
+
 # Despliegue de la aplicación Minimal Travel
 
 ## Requisitos previos
@@ -97,6 +97,5 @@ Para un despliegue en producción, se recomienda:
 
 **Recuerda:**  
 Siempre que cambies de máquina o red, revisa y actualiza la IP de la base de datos y del backend en los archivos de configuración correspondientes para asegurar la conectividad de todos los componentes del sistema.
-```
 
 ---
