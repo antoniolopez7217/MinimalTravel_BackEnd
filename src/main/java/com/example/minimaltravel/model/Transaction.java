@@ -30,7 +30,7 @@ public class Transaction {
 
 	private Double amount;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") // Formato ISO-8601s
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date creationDate;
 
     private String category;
@@ -40,7 +40,7 @@ public class Transaction {
     @JoinColumn(name = "creditorUserId", referencedColumnName = "userId")
     private User creditorUser;
 
-    // Campo solo-lectura para exponer el userId directamente si lo necesitas
+    // Campo solo-lectura para exponer el userId directamente
     @Column(name = "creditorUserId", insertable = false, updatable = false)
     private Long creditorUserId;
 

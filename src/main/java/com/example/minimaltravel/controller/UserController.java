@@ -24,12 +24,14 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    // Obtener todos los usuarios
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userRepository.findAll();
         return ResponseEntity.ok(users);
     }
 
+    // Editar usuario
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
     User user = userRepository.findById(id)
@@ -42,12 +44,14 @@ public class UserController {
     return ResponseEntity.ok(updatedUser);
     }
 
+    // Crear un nuevo usuario
     @PostMapping
     public User createUser(@RequestBody User user) {
         user.setCreationDate(new Date());
         return userRepository.save(user);
     }
 
+    // Borrar usuario
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));

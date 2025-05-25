@@ -19,6 +19,7 @@ public interface TransactionUserRepository extends JpaRepository<TransactionUser
     @Query("DELETE FROM TransactionUser tu WHERE tu.transaction.transactionId = :transactionId")
     void deleteByTransaction_TransactionId(Long transactionId);
 
+    // Calcula los balances finales entre cada uno de los usuarios
     @Query(value = """
         with raw_data as (
             select 

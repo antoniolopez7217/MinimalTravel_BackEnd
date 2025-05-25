@@ -22,17 +22,17 @@ public class Task {
 
     private String description;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") // Formato ISO-8601s
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date creationDate;
 
-    private String status; // Example:"Eliminada", "Pendiente", "Completada"
+    private String status; // "Eliminado", "Pendiente", "Completado"
     
     // Relación ManyToOne con User, usando assignedUserId como clave foránea
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assignedUserId", referencedColumnName = "userId")
     private User assignedUser;
 
-    // Campo solo-lectura para exponer el userId directamente si lo necesitas
+    // Campo solo-lectura para exponer el userId directamente
     @Column(name = "assignedUserId", insertable = false, updatable = false)
     private Long assignedUserId;
 

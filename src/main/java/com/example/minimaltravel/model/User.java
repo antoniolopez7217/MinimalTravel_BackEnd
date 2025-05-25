@@ -20,7 +20,7 @@ public class User {
 
     private String mail;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") // Formato ISO-8601s
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date creationDate;
 
     // Getters and setters

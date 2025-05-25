@@ -29,12 +29,12 @@ public class TaskController {
     private TaskRepository taskRepository;
 
     @Autowired
-    private UserRepository userRepository; // Asegúrate de inyectar el UserRepository
+    private UserRepository userRepository;
 
     // Obtener todas las tareas con nombre de usuario
     @GetMapping
     public ResponseEntity<List<TaskResponse>> getAllTasks() {
-        List<Task> tasks = taskRepository.findAllWithUser(); // Necesita JOIN FETCH en el repositorio
+        List<Task> tasks = taskRepository.findAllWithUser();
         return ResponseEntity.ok(tasks.stream().map(this::convertToResponse).collect(Collectors.toList()));
     }
 
@@ -79,12 +79,12 @@ public class TaskController {
         return ResponseEntity.ok(convertToResponse(updatedTask));
     }
 
-    // Eliminar tarea (marcar como "Deleted")
+    // Eliminar tarea (marcar como "Eliminado")
     @DeleteMapping("/{id}")
     public void deleteTask(@PathVariable Long id) {
         Task task = taskRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
-        task.setStatus("Deleted");
+        task.setStatus("Eliminado");
         taskRepository.save(task);
     }
 

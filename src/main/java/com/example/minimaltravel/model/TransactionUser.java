@@ -24,7 +24,7 @@ public class TransactionUser {
     @JoinColumn(name = "user_id")
     private User debtorUser;
 
-    private Double amount; // Importe que debe pagar ese usuario en este gasto
+    private Double amount; // Importe que debe pagar ese usuario (debtor) en este gasto
 
     public Long getId() {
         return id;
